@@ -1,6 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState = {
+export interface UserState {
+  isLoggedIn: boolean;
+  token: string;
+  email: string;
+}
+
+const initialState: UserState = {
   isLoggedIn: false,
   token: '',
   email: '',
@@ -10,7 +16,7 @@ const userSlice = createSlice({
   name: 'User',
   initialState,
   reducers: {
-    signIn: (state, action) => {
+    signIn: (state, action: PayloadAction<{ email: string; token: string }>) => {
       console.log('singIn reducer');
       state.isLoggedIn = true;
       state.email = action.payload.email;
@@ -24,11 +30,9 @@ const userSlice = createSlice({
       state.isLoggedIn = false;
       state.email = '';
       state.email = '';
-    }
+    },
   },
 });
-
-console.log(userSlice);
 
 export const { signIn, signOut } = userSlice.actions;
 export default userSlice.reducer;
