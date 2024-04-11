@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { signOut } from "../store/userSlice";
+import { useDispatch } from 'react-redux';
 
 const DashboardPage: React.FC = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   useEffect(() => {
@@ -13,7 +16,8 @@ const DashboardPage: React.FC = () => {
     }
   }, []);
   const handleLogout = () => {
-    localStorage.removeItem('us');
+    // localStorage.removeItem("us");
+    dispatch(signOut());
     navigate('/');
   };
   return (

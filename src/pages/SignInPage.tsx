@@ -1,9 +1,12 @@
 import React from 'react';
 import axios from 'axios';
+import { signIn } from '../store/userSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 const SignInPage: React.FC = () => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -16,14 +19,14 @@ const SignInPage: React.FC = () => {
       });
       if(res.data) {
         navigate('/dashboard');
-        localStorage.setItem('us', res.data.token);
+        // localStorage.setItem('us', res.data.token);
+        dispatch(signIn({ email, token: res.data.token }));
       }
     } catch (err) {
        console.log(err);
     }
   };
   const signBtn = location.pathname === '/signup' ? 'Sign Up' : 'Sign In';
-  console.log(location.pathname);
   
   useEffect(() => {
     const userToken = localStorage.getItem('us');
